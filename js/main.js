@@ -105,3 +105,7 @@ function touch2Mouse(e) {
 
   e.preventDefault();
 }
+
+function watchColorPicker(value) {
+  console.log(value);
+}
