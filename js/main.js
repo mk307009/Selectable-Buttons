@@ -1,29 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
 
   var foo = new Selectables({
-    elements: 'a',
+    elements: 'a, button',
     selectedClass: 'active',
     zone: '#zone1'
   });
   
-  var bar2 = new Selectables({
-    elements: 'a',
+/*  var bar2 = new Selectables({
+    elements: 'a,button',
     selectedClass: 'active',
-    zone: '#zone2',
-     touchmove:function(e) {
-      console.log("touch"+e);
-    }, 
+    zone: '#zone1',
     onSelect:function(element) {
-         console.log("onSelect");
-     },
-     start:function(element) {
-         console.log("start");
-     },
-    drag: function(e) {
-      console.log("Drag");
+      console.log("onSelect");
+	  console.log(element);
+    },
+    start:function(element) {
+      console.log("start");
     }
   });
-
+*/
 
   var bar = new Selectables({
     elements: 'a',
@@ -44,10 +39,20 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById("zone1").addEventListener('touchstart', touch2Mouse, false);
 document.getElementById("zone1").addEventListener('touchmove', touch2Mouse, false);
 document.getElementById("zone1").addEventListener('touchend', touch2Mouse, false);
+/*document.getElementById("zone1").addEventListener('touchcancel', process_touchmove);*/
+document.getElementById("zone1").addEventListener('mouseup', release_action);
+
+function release_action(ev) {
+  // Set call preventDefault()
+  console.log("release");
+  console.log(ev);
+  
+  ev.preventDefault();
+}
 
 function process_touchmove(ev) {
   // Set call preventDefault()
-  console.log("touch");
+  console.log(ev);
   
   ev.preventDefault();
 }
@@ -72,16 +77,25 @@ function process_touchend(ev) {
 
 }
 
-function touch2Mouse(e)
-{
+function touch2Mouse(e) {
   var theTouch = e.changedTouches[0];
   var mouseEv;
 
   switch(e.type)
   {
-    case "touchstart": mouseEv="mousedown"; break;  
-    case "touchend":   mouseEv="mouseup"; break;
-    case "touchmove":  mouseEv="mousemove"; break;
+    case "touchstart": {
+	  mouseEv="mousedown";
+	  console.log(e.type);
+	  console.log(e);
+	} break;  
+    case "touchend": {
+		mouseEv="mouseup";
+		console.log(e.type);
+		console.log(e);
+	} break;
+    case "touchmove": {
+		mouseEv="mousemove";
+	} break;
     default: return;
   }
 
